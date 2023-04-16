@@ -41,14 +41,16 @@ def load_data(database_filepath):
 
 def tokenize(text):
     """
-    :param text: takes in a string value and using nltk methods normalizes,tokenizes and lemmatizes it.
+    :param text: takes in a string value and using nltk methods normalizes,
+    tokenizes and lemmatizes it.
 
 
     :return: list of nlp processed text.
 
     """
 
-    # Find all urls if any exists in the text and replace it with the word 'url_placeholder'
+    # Find all urls if any exists in the text and replace it with the word 
+    # 'url_placeholder'
     url_format = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
     all_urls = re.findall(url_format, text)
@@ -73,7 +75,8 @@ def tokenize(text):
 
 def build_model():
     """
-        With feature extraction methods from scikit learn this function builds a pipeline with a classifier.
+        With feature extraction methods from scikit learn this function builds 
+        a pipeline with a classifier.
 
     """
 
@@ -81,6 +84,8 @@ def build_model():
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(
+            # The best parameters are set after applying Grid search in notebook. 
+            
             RandomForestClassifier(min_samples_split=2, n_estimators=10)))
     ])
 
