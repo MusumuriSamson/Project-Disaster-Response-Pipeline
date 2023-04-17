@@ -5,8 +5,10 @@ from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
     """
-    :param messages_filepath: This variable takes in the filepath of the messages.csv to read.
-    :param categories_filepath: This variable takes in the filepath of the categories.csv to read.
+    :param messages_filepath: This variable takes in the filepath of the 
+    messages.csv to read.
+    :param categories_filepath: This variable takes in the filepath of the 
+    categories.csv to read.
 
     :return: The function returns the merged datasets.
     """
@@ -38,7 +40,8 @@ def clean_data(df):
     # Rename columns in the dataframe
     categories.columns = column_names
 
-    # Loop through all the column values and replace with the last number it holds
+    # Loop through all the column values and replace with the last number it 
+    # holds
     for col in categories:
         categories[col] = categories[col].str[-1]
         # Convert the values to astype(int)
@@ -58,8 +61,10 @@ def clean_data(df):
 
 def save_data(df, database_filename):
     """
-    :param df: This variable takes in the dataframe for which you want to create a table in the database.
-    :param database_filename: This variable takes in the filepath to store the database.
+    :param df: This variable takes in the dataframe for which you want to 
+    create a table in the database.
+    :param database_filename: This variable takes in the filepath to store 
+    the database.
 
     """
     engine = create_engine('sqlite:///' + database_filename, echo=False)

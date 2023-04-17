@@ -14,6 +14,7 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
+
 def tokenize(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -24,6 +25,7 @@ def tokenize(text):
         clean_tokens.append(clean_tok)
 
     return clean_tokens
+
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
@@ -37,15 +39,58 @@ model = joblib.load("../models/your_model_name.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    
+
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
-    
+
+    # Plotting Top 10 categories
+    cat_names = df.iloc[:, 4:]
+    cat_counts = (cat_names.mean(
+    )*cat_names.shape[0]).div(100).sort_values(ascending=False).head(10)
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
+
+        {    # Graph 1 Bar Chart
+            'data': [
+                Bar(
+                    x=cat_names,
+                    y=cat_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Top Ten Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category",
+                    'tickangle': 45
+                }
+            }
+        },
+        {  # Graph 2 - Pie Chart
+            'data': [
+                {
+                    'type': 'pie',
+                    'labels': genre_names,
+                    'values': genre_counts,
+                    'textinfo': 'percent+label',
+                    'textposition': 'inside',
+                    'autopct': '%1.1f%%',
+
+                }
+            ],
+
+            'layout': {
+                'title': 'Percentage of Genres',
+            }
+        },
+
         {
             'data': [
                 Bar(
@@ -63,13 +108,14 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
+        },
+
     ]
-    
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
-    
+
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
 
@@ -78,13 +124,13 @@ def index():
 @app.route('/go')
 def go():
     # save user input in query
-    query = request.args.get('query', '') 
+    query = request.args.get('query', '')
 
     # use model to predict classification for query
     classification_labels = model.predict([query])[0]
     classification_results = dict(zip(df.columns[4:], classification_labels))
 
-    # This will render the go.html Please see that file. 
+    # This will render the go.html Please see that file.
     return render_template(
         'go.html',
         query=query,
@@ -98,5 +144,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
