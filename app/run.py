@@ -45,10 +45,20 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
-    # Plotting Top 10 categories
-    cat_names = df.iloc[:, 4:]
-    cat_counts = (cat_names.mean(
-    )*cat_names.shape[0]).div(100).sort_values(ascending=False).head(10)
+    # Plotting Top 5 categories for 'direct' - > Graph 1
+    top_direct_cat = df[df['genre'] == 'direct'].iloc[:, 4:].sum() \
+        .sort_values(ascending=False).head(5)
+    top_direct_cat_names = list(top_direct_cat.index)
+
+    # Plotting Top 5 categories for 'social' - > Graph 2
+    top_social_cat = df[df['genre'] == 'social'].iloc[:, 4:].sum() \
+        .sort_values(ascending=False).head(5)
+    top_social_cat_names = list(top_direct_cat.index)
+
+    # Plotting Top 5 categories for 'news' - > Graph 3
+    top_news_cat = df[df['genre'] == 'news'].iloc[:, 4:].sum() \
+        .sort_values(ascending=False).head(5)
+    top_news_cat_names = list(top_direct_cat.index)
 
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -57,13 +67,31 @@ def index():
         {    # Graph 1 Bar Chart
             'data': [
                 Bar(
-                    x=cat_names,
-                    y=cat_counts
+                    x=top_direct_cat_names,
+                    y=top_direct_cat
                 )
             ],
 
             'layout': {
-                'title': 'Top Ten Categories',
+                'title': 'Top Five Categories for Genre: Direct',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        {    # Graph 2 Bar Chart
+            'data': [
+                Bar(
+                    x=top_social_cat_names,
+                    y=top_social_cat
+                )
+            ],
+
+            'layout': {
+                'title': 'Top Five Categories for Genre: Social',
                 'yaxis': {
                     'title': "Count"
                 },
@@ -73,23 +101,31 @@ def index():
                 }
             }
         },
-        {  # Graph 2 - Pie Chart
-            'data': [
-                {
-                    'type': 'pie',
-                    'labels': genre_names,
-                    'values': genre_counts,
-                    'textinfo': 'percent+label',
-                    'textposition': 'inside',
-                    'autopct': '%1.1f%%',
 
-                }
+        {    # Graph 3 Bar Chart
+            'data': [
+                Bar(
+                    x=top_news_cat_names,
+                    y=top_news_cat
+                )
             ],
 
             'layout': {
-                'title': 'Percentage of Genres',
+                'title': 'Top Five Categories for Genre: News',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category",
+                    'tickangle': 45
+                }
             }
         },
+
+
+
+
+
 
         {
             'data': [
