@@ -49,7 +49,7 @@ def tokenize(text):
 
     """
 
-    # Find all urls if any exists in the text and replace it with the word 
+    # Find all urls if any exists in the text and replace it with the word
     # 'url_placeholder'
     url_format = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
@@ -75,8 +75,7 @@ def tokenize(text):
 
 def build_model():
     """
-        With feature extraction methods from scikit learn this function builds 
-        a pipeline with a classifier.
+        This function uses pipeline to feed into GridSearchCV in order to determine the best parameters.
 
     """
 
@@ -84,31 +83,34 @@ def build_model():
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(
-            # The best parameters are set after applying Grid search in notebook. 
-            
-            RandomForestClassifier(min_samples_split=2, n_estimators=10)))
+            RandomForestClassifier()))
     ])
+    parameters = {
+                'clf__estimator__n_estimators': [5,10],
+                'clf__estimator__min_samples_split': [2,4]}
+    
+    grid_search = GridSearchCV(pipeline, param_grid=parameters, cv=5, n_jobs=-1, verbose=2)
 
-    return pipeline
+    return grid_search
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
     """
-    :param model: tT.
-    :param X_test: takes in a set of input features.
-    :param Y_test: takes in a set of input labels.
-    :param category_names: takes in a list of values containing column names
+    INPUT:
+    model - ML model
+    X_test - test messages
+    y_test - categories for test messages
+    category_names - category name for y
 
-    :return:
-
+    OUTPUT:
+    none - print scores (precision, recall, f1-score) for each output category of the dataset.
     """
-
-    y_pred = model.predict(X_test)
-
     accuracy_scores = []
     precision_scores = []
     f1_scores = []
     all_recall = []
+
+    y_pred = model.predict(X_test)
 
     for i, cat in enumerate(category_names):
 
@@ -131,7 +133,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     all_scores_df = all_scores_df.reset_index().rename(
         columns={'index': 'Feature'})
 
-    return all_scores_df
+    print(all_scores_df.to_string(index=False))
 
 
 def save_model(model, model_filepath):
