@@ -1,6 +1,41 @@
 # Disaster Response Pipeline Project
 
-### Instructions:
+### Contents
+1. [Introduction] (#introduction)
+2. File Descriptions (#fileinfo)
+3. Instructions (#instructions)
+4. License (#license)
+5. Screenshots (#screenshots)
+
+
+## Introduction <a name="introduction"></a>
+This project is part of Udacity's Data Scientist Nanodegree Program in conjunction with [Figure Eight](https://www.figure-eight.com/).
+
+The pre-labeled disaster messages will be use in this project to construct a disaster response model that can categorize messages received in real time during a catastrophe event, allowing communications to be routed to the appropriate disaster response agency.
+
+This project provides a web application that allows disaster response workers to input received messages and obtain categorization results.
+
+
+## File Descriptions <a name="fileinfo"></a>
+### 'data' Folder
+**disaster_messages.csv** - actual disaster messages (supplied by Figure Eight)br/>
+**disaster_categories.csv** - message categoriesbr/>
+**process_data.py** - ETL pipeline for loading, cleaning, extracting features, and storing data in SQLite databasebr/>
+**process_data.ipynb**  Jupyter Notebook is being used to prepare the data i.e. Extract Transform Loadbr/>
+**DisasterResponse.db** - Clean data is saved in a SQlite database.
+
+### 'models' Folder
+**train_classifier.py** - Python script - ML pipeline for loading cleaned data, training the model, and saving the learned model as a pickle (.pkl) file for later usebr/>
+**classifier.pkl** is a pickle file that holds a trained modelbr/>
+**mlpipeline.ipynb** Jupyter Notebook was used to set up the ML pipeline.
+
+### 'app' Folder 
+**run.py** - python script to launch web app.<br/>
+### 'templates' Folder 
+Contains web dependent files (go.html and master.html) necessary to launch the web application.
+
+
+### Instructions <a name="instructions"></a>
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -12,3 +47,12 @@
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+
+## License <a name="license"></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
+## Screenshots <a name="screenshots"></a>
+1. 
