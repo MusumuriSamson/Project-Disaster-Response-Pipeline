@@ -7,16 +7,18 @@
 4. [License] (#license)
 5. [Screenshots] (#screenshots)
 
+<a name="introduction"></a>
 
-## Introduction <a name="introduction"></a>
+## Introduction 
 This project is part of Udacity's Data Scientist Nanodegree Program in conjunction with [Figure Eight](https://www.figure-eight.com/).
 
 The pre-labeled disaster messages will be use in this project to construct a disaster response model that can categorize messages received in real time during a catastrophe event, allowing communications to be routed to the appropriate disaster response agency.
 
 This project provides a web application that allows disaster response workers to input received messages and obtain categorization results.
 
+<a name="fileinfo"></a>
 
-## File Descriptions <a name="fileinfo"></a>
+## File Descriptions 
 ### 1. 'data' Folder
 **disaster_messages.csv** - actual disaster messages (supplied by Figure Eight)br/>
 **disaster_categories.csv** - message categoriesbr/>
@@ -35,7 +37,9 @@ This project provides a web application that allows disaster response workers to
 Contains web dependent files (go.html and master.html) necessary to launch the web application.
 
 
-### Instructions <a name="instructions"></a>
+<a name="introduction"></a>
+
+## Instructions 
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -48,10 +52,12 @@ Contains web dependent files (go.html and master.html) necessary to launch the w
 
 3. Go to http://0.0.0.0:3001/
 
+<a name="license"></a>
 
-## License <a name="license"></a>
+## License 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+<a name="screenshots"></a>
 
-## Screenshots <a name="screenshots"></a>
+## Screenshots 
 1. 
