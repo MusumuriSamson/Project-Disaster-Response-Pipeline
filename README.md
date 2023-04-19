@@ -1,11 +1,11 @@
 # Disaster Response Pipeline Project
 
 ### Contents
-1. [Introduction] (#introduction)
-2. [File Descriptions] (#fileinfo)
-3. [Instructions] (#instructions)
-4. [License] (#license)
-5. [Screenshots] (#screenshots)
+1. [Introduction](#introduction)
+2. [File Descriptions](#fileinfo)
+3. [Instructions](#instructions)
+4. [License](#license)
+5. [Screenshots](#screenshots)
 
 <a name="introduction"></a>
 
