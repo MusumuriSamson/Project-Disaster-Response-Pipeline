@@ -2,11 +2,7 @@
 
 ### Contents
 1. [Introduction](#introduction)
-<<<<<<< HEAD
 2. [File Descriptions](#files)
-=======
-2. [File Descriptions](#fileinfo)
->>>>>>> a3497849d94221f8f00c112fd799dcd6fac90b65
 3. [Instructions](#instructions)
 4. [License](#license)
 5. [Screenshots](#screenshots)
@@ -20,11 +16,7 @@ The pre-labeled disaster messages will be use in this project to construct a dis
 
 This project provides a web application that allows disaster response workers to input received messages and obtain categorization results.
 
-<<<<<<< HEAD
 <a name="files"></a>
-=======
-<a name="fileinfo"></a>
->>>>>>> a3497849d94221f8f00c112fd799dcd6fac90b65
 
 ## File Descriptions 
 ### 1. 'data' Folder
@@ -68,8 +60,4 @@ Contains web dependent files (go.html and master.html) necessary to launch the w
 <a name="screenshots"></a>
 
 ## Screenshots 
-<<<<<<< HEAD
 1. 
-=======
-1. 
->>>>>>> a3497849d94221f8f00c112fd799dcd6fac90b65
