@@ -49,10 +49,7 @@ def clean_data(df):
 
     # Drop the categories column in the dataframe
     df = df.drop('categories', axis=1)
-
-    # Dropping the column because it has all 0's
-    df =  df.drop('child_alone',axis=1)
-
+    
     # Since the related column has an addition value; assuming that it is a typo.
     df['related'] = df['related'].apply(lambda x: 1 if x==2 else x)
 
