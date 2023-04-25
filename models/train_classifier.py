@@ -6,18 +6,18 @@ import re
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline,FeatureUnion
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
-from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
-
+from starverb import StartVerbExtractor
 import pickle
 warnings.filterwarnings('ignore')
 
 
 def load_data(database_filepath):
+
     """
     :param file_path: takes in the filepath of the database to read.
     :return: the function returns the table as a dataframe.
@@ -29,7 +29,6 @@ def load_data(database_filepath):
     df = pd.read_sql_query("SELECT * from Disaster_data", con=conn)
 
     X = df['message']
-    # Y = df['genre']
     Y = df.drop(['id', 'message', 'original', 'genre'], axis=1)
     category_names = Y.columns
 
@@ -39,10 +38,10 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+
     """
     :param text: takes in a string value and using nltk methods normalizes,
     tokenizes and lemmatizes it.
-
 
     :return: list of nlp processed text.
 
@@ -72,20 +71,27 @@ def tokenize(text):
     return clean_tokens
 
 
+
 def build_model():
+
     """
         This function uses pipeline to feed into GridSearchCV in order to determine the best parameters.
 
     """
 
     pipeline = Pipeline([
-        ('vect', CountVectorizer(tokenizer=tokenize)),
-        ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(
-            AdaBoostClassifier()))
+        ('features', FeatureUnion([
+            ('text_pipeline', Pipeline([
+                ('vect', CountVectorizer(tokenizer=tokenize)),
+                ('tfidf', TfidfTransformer())
+            ])),
+            ('starting_verb', StartVerbExtractor())
+        ])),
+        ('clf', MultiOutputClassifier(AdaBoostClassifier()))
     ])
+
     parameters = {
-                'clf__estimator__learning_rate': [1.0,2.0],
+                'clf__estimator__learning_rate': [1.0,1.5],
                 'clf__estimator__n_estimators': [10,20]}
     
     grid_search = GridSearchCV(pipeline, param_grid=parameters, cv=5, n_jobs=-1, verbose=2)
@@ -94,15 +100,15 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    """
-    INPUT:
-    model - ML model
-    X_test - test messages
-    y_test - categories for test messages
-    category_names - category name for y
 
-    OUTPUT:
-    Scores of (precision, recall, f1-score) for each output category of the dataset.
+    """
+    :param model - ML model
+    :param X_test - test messages
+    :param y_test - categories for test messages
+    :param category_names - category name for y
+
+    :return: Scores of (precision, recall, f1-score) for each output category of the dataset.
+
     """
     y_pred = model.predict(X_test)
 
@@ -110,11 +116,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+
     """
     :param model: our classification estimator
     :param model_filepath: location of the path to store our model
 
-    :return:
+    :return: None
 
     """
 
