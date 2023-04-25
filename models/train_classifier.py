@@ -8,8 +8,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.multioutput import ClassifierChain
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
@@ -83,11 +82,11 @@ def build_model():
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(
-            RandomForestClassifier()))
+            AdaBoostClassifier()))
     ])
     parameters = {
-                'clf__estimator__n_estimators': [5,10],
-                'clf__estimator__min_samples_split': [2,4]}
+                'clf__estimator__learning_rate': [1.0,2.0],
+                'clf__estimator__n_estimators': [10,20]}
     
     grid_search = GridSearchCV(pipeline, param_grid=parameters, cv=5, n_jobs=-1, verbose=2)
 
@@ -103,37 +102,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
     category_names - category name for y
 
     OUTPUT:
-    none - print scores (precision, recall, f1-score) for each output category of the dataset.
+    Scores of (precision, recall, f1-score) for each output category of the dataset.
     """
-    accuracy_scores = []
-    precision_scores = []
-    f1_scores = []
-    all_recall = []
-
     y_pred = model.predict(X_test)
 
-    for i, cat in enumerate(category_names):
-
-        accuracy_scores.append(accuracy_score(
-            Y_test.values[:, i], y_pred[:, i])*100)
-        precision_scores.append(precision_score(
-            Y_test.values[:, i], y_pred[:, i], average='weighted')*100)
-        f1_scores.append(
-            f1_score(Y_test.values[:, i], y_pred[:, i], average='weighted')*100)
-        all_recall.append(recall_score(
-            Y_test.values[:, i], y_pred[:, i], average='weighted')*100)
-
-    all_scores_dict = dict(zip(category_names, zip(
-        accuracy_scores, precision_scores, f1_scores, all_recall)))
-
-    all_scores_df = pd.DataFrame(all_scores_dict).T
-
-    all_scores_df.columns = ['Accuracy', 'Precision', 'F1', 'Recall']
-
-    all_scores_df = all_scores_df.reset_index().rename(
-        columns={'index': 'Feature'})
-
-    print(all_scores_df.to_string(index=False))
+    print(classification_report(Y_test.values,y_pred,target_names=category_names))
 
 
 def save_model(model, model_filepath):
