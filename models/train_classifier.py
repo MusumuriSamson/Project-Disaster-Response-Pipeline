@@ -3,21 +3,19 @@ import pandas as pd
 import warnings
 import sqlite3
 import re
+import pickle
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.pipeline import Pipeline,FeatureUnion
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
-from startverb import StartVerbExtractor
-import pickle
 warnings.filterwarnings('ignore')
 
 
 def load_data(database_filepath):
-
     """
     :param file_path: takes in the filepath of the database to read.
     :return: the function returns the table as a dataframe.
@@ -38,7 +36,6 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-
     """
     :param text: takes in a string value and using nltk methods normalizes,
     tokenizes and lemmatizes it.
@@ -73,7 +70,6 @@ def tokenize(text):
 
 
 def build_model():
-
     """
         This function uses pipeline to feed into GridSearchCV in order to determine the best parameters.
 
@@ -85,22 +81,22 @@ def build_model():
                 ('vect', CountVectorizer(tokenizer=tokenize)),
                 ('tfidf', TfidfTransformer())
             ])),
-            ('starting_verb', StartVerbExtractor())
+            
         ])),
         ('clf', MultiOutputClassifier(AdaBoostClassifier()))
     ])
 
     parameters = {
-                'clf__estimator__learning_rate': [1.0,1.5],
-                'clf__estimator__n_estimators': [10,20]}
-    
-    grid_search = GridSearchCV(pipeline, param_grid=parameters, cv=5, n_jobs=-1, verbose=2)
+        'clf__estimator__learning_rate': [1.0, 1.5],
+        'clf__estimator__n_estimators': [10, 20]}
+
+    grid_search = GridSearchCV(
+        pipeline, param_grid=parameters, cv=5, n_jobs=-1, verbose=2)
 
     return grid_search
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-
     """
     :param model - ML model
     :param X_test - test messages
@@ -112,11 +108,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
     """
     y_pred = model.predict(X_test)
 
-    print(classification_report(Y_test.values,y_pred,target_names=category_names))
+    print(classification_report(Y_test.values,
+          y_pred, target_names=category_names))
 
 
 def save_model(model, model_filepath):
-
     """
     :param model: our classification estimator
     :param model_filepath: location of the path to store our model
