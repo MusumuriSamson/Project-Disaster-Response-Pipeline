@@ -61,4 +61,25 @@ Contains web dependent files (go.html and master.html) necessary to launch the w
 
 ## Screenshots 
 1. Main Webpage
-<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/9d36ca550fd87f45a81dd77f89bf4512a7cf6557/img/Web%20main%202.jpg">
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Webpage%20Main.jpg">
+
+2. Graphs
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Web%20main%202.jpg">
+
+3. Results
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Webpage%20Result.jpg">
+
+4. Running First Command 
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/First%20Command.jpg">
+
+5. Running Second Command
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Second%20command.jpg">
+
+6. Classification Report
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Second%20Result.jpg">
+
+7. Model Saved Successfully
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Second%20End.jpg">
+
+8. Running The run.py To Launch Website
+<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/fa7d7c1ccb11928ffce560fe2dc5ae7316722e37/img/Third%20command.jpg">
