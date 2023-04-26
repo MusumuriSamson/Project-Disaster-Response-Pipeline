@@ -60,4 +60,5 @@ Contains web dependent files (go.html and master.html) necessary to launch the w
 <a name="screenshots"></a>
 
 ## Screenshots 
-1. 
+1. Main Webpage
+![alt text]<img src="https://github.com/MusumuriSamson/Project-Disaster-Response-Pipeline/blob/9d36ca550fd87f45a81dd77f89bf4512a7cf6557/img/Web%20main%202.jpg" width="100" height="100">
