@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
-from starverb import StartVerbExtractor
+from startverb import StartVerbExtractor
 import pickle
 warnings.filterwarnings('ignore')
 
